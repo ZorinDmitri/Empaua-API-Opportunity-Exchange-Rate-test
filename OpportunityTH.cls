@@ -9,10 +9,11 @@ public class OpportunityTH extends TriggerHandler {
 		this.oldOpps = (Map<Id, Opportunity>) Trigger.oldMap;
 	}
 
-	public override void beforeInsert() {
+	public override void afterInsert() {
 		for (Opportunity opp : newOppList) {
-			ExchangeRateConsumer erConsumer = new ExchangeRateConsumer(opp, 'null', opp.CurrencyIsoCode);
-			ID jobID = System.enqueueJob(erConsumer);
+				Opportunity oppToUpdate = new Opportunity(Id = opp.Id);
+				ExchangeRateConsumer erConsumer = new ExchangeRateConsumer(oppToUpdate, 'null', opp.CurrencyIsoCode);
+				ID jobID = System.enqueueJob(erConsumer);
 		}
 	}
 

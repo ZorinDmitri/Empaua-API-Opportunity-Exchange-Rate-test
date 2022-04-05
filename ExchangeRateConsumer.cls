@@ -28,7 +28,7 @@ public with sharing class ExchangeRateConsumer implements Queueable, Database.Al
 			if (response.getStatusCode() == 200) {
 				exchangeRate = ExchangeRateDTO.parse(response.getBody());
                 oppToUpdate.LastExchangeRate__c = exchangeRate.Data.rate;
-				upsert oppToUpdate;
+				update oppToUpdate;
 			}
 		} catch (Exception e) {
 			throw e;
